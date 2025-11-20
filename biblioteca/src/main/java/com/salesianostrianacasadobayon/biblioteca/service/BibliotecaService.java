@@ -23,7 +23,7 @@ public class BibliotecaService {
         List<Biblioteca> result = bibliotecaRepository.findAll();
 
         if(result.isEmpty())
-            throw new LibraryNotFoundException("No hay bibliotecas registradas.");
+            throw new LibraryNotFoundException();
         return result;
     }
 
