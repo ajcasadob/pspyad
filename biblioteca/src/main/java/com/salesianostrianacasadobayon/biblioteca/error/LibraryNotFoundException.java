@@ -13,7 +13,7 @@ public class LibraryNotFoundException extends RuntimeException {
         super(message);
     }
 
-    public LibraryNotFoundException (Integer id) {
+    public LibraryNotFoundException (Long id) {
         super("No se ha encontrado la biblioteca con ID: " + id);
     }
 }

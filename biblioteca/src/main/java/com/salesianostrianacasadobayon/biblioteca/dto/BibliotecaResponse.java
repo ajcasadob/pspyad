@@ -3,7 +3,7 @@ package com.salesianostrianacasadobayon.biblioteca.dto;
 import com.salesianostrianacasadobayon.biblioteca.model.Biblioteca;
 
 public record BibliotecaResponse(
-        Integer id,
+        Long id,
         String nombreCiudad,
         String nombreBiblioteca,
         String anoFundacion,

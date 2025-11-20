@@ -27,7 +27,7 @@ public class BibliotecaService {
         return result;
     }
 
-    public Biblioteca getById (Integer id){
+    public Biblioteca getById (Long id){
         return bibliotecaRepository.findById(id)
                 .orElseThrow(()-> new LibraryNotFoundException(id));
     }
@@ -42,7 +42,7 @@ public class BibliotecaService {
 
     }
 
-    public Biblioteca edit (CrearBibliotecaCmd cmd, Integer id){
+    public Biblioteca edit (CrearBibliotecaCmd cmd, Long id){
 
         return bibliotecaRepository.findById(id)
                 .map(biblioteca-> {
@@ -64,7 +64,7 @@ public class BibliotecaService {
         deleleById(biblioteca.getId());
     }
 
-    public void deleleById(Integer id){
+    public void deleleById(Long id){
         bibliotecaRepository.deleteById(id);
     }
 

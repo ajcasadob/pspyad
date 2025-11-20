@@ -126,7 +126,7 @@ public class BibliotecaController {
                     )
             )
     })
-    public ResponseEntity<BibliotecaResponse> getById(@PathVariable Integer id){
+    public ResponseEntity<BibliotecaResponse> getById(@PathVariable Long id){
         return ResponseEntity.ok(
                 BibliotecaResponse.of(bibliotecaService.getById(id)));
     }
@@ -254,7 +254,7 @@ public class BibliotecaController {
             )
     })
     public ResponseEntity<BibliotecaResponse> edit(
-            @PathVariable Integer id,
+            @PathVariable Long id,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Datos actualizados de la biblioteca",
                     required = true,
@@ -306,7 +306,7 @@ public class BibliotecaController {
                     )
             )
     })
-    public ResponseEntity<?> delete(@PathVariable Integer id){
+    public ResponseEntity<?> delete(@PathVariable Long id){
         bibliotecaService.deleleById(id);
         return ResponseEntity.noContent().build();
     }
