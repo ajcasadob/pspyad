@@ -21,7 +21,7 @@ public class Usuario {
     @Column(unique = true)
     private Long numTarjeta;
 
-    private Long pin;
+    private String pin;
 
     private double saldo;
 

@@ -24,11 +24,18 @@ public class Uso {
     private double coste;
 
     @ManyToOne
+    @JoinColumn(name = "bicicleta_id")
     private Bicicleta bicicleta;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @ManyToOne
-    private Estacion estacion;
+    @JoinColumn(name = "inicio")
+    private Estacion inicio;
+
+    @JoinColumn(name = "fin")
+    @ManyToOne
+    private Estacion fin;
 }

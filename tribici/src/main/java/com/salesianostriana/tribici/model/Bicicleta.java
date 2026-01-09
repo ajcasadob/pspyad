@@ -26,6 +26,7 @@ public class Bicicleta {
     private Estado estado;
 
     @ManyToOne
+    @JoinColumn(name = "esta_en")
     private Estacion estacion;
 
     @OneToMany(mappedBy = "bicicleta")
