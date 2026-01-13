@@ -1,5 +1,6 @@
 package com.salesianostriana.tribici.service;
 
+import com.salesianostriana.tribici.excepciones.EntityNotFoundException;
 import com.salesianostriana.tribici.model.Bicicleta;
 import com.salesianostriana.tribici.repository.BicicletaRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,18 @@ public class BicicletaService {
         return bicicletaRepository.save(bicicleta);
 
 
+    }
+
+    public Bicicleta update (Bicicleta bicicleta){
+        return bicicletaRepository.findById(bicicleta.getId())
+                .map(b->{
+                    b.setEstado(bicicleta.getEstado());
+                    b.setEstaEn(bicicleta.getEstaEn());
+                    b.setModelo(bicicleta.getModelo());
+                    b.setMarca(bicicleta.getMarca());
+                    return bicicletaRepository.save(b);
+                })
+                .orElseThrow(()-> new EntityNotFoundException("Bicicleta no encontrada"));
     }
 
 

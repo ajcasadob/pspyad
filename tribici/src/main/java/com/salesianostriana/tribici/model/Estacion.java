@@ -16,38 +16,31 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class Estacion {
-
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
-    private Long numero;
-
-    @Column(unique = true)
+    private int numero;
     private String nombre;
+    private String coordenadas;
+    private int capacidad;
 
-    private double coordenadas;
+    // ¿Estación - Bicicleta?
 
-    private long capacidad;
-
-    @OneToMany(mappedBy = "estacion")
     @Builder.Default
-    private List<Bicicleta> bicicletaList = new ArrayList<>();
+    @OneToMany(mappedBy = "estaEn", fetch = FetchType.EAGER)
+    private List<Bicicleta> bicicletas = new ArrayList<>();
 
-    @OneToMany
-    @Builder.Default
-    private List<Uso> uso = new ArrayList<>();
 
-    //Metodos de utilidad
+    // Métodos de utilidad
 
-    public void addBicicleta (Bicicleta bicicleta){
-        bicicletaList.add(bicicleta);
-        bicicleta.setEstacion(this);
+    public void addBicicleta(Bicicleta bicicleta) {
+        bicicletas.add(bicicleta);
+        bicicleta.setEstaEn(this);
     }
 
-    public void removeBicicleta(Bicicleta bicicleta){
-        bicicletaList.remove(bicicleta);
-        bicicleta.setEstacion(null);
+    public void removeBicicleta(Bicicleta bicicleta) {
+        bicicletas.remove(bicicleta);
+        bicicleta.setEstaEn(null);
     }
 
 

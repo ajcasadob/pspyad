@@ -1,10 +1,10 @@
 package com.salesianostriana.tribici.service;
 
+import com.salesianostriana.tribici.excepciones.EntityNotFoundException;
 import com.salesianostriana.tribici.model.Estacion;
 import com.salesianostriana.tribici.repository.EstacionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -15,24 +15,40 @@ public class EstacionService {
     private final EstacionRepository estacionRepository;
 
 
-    public List<Estacion> findAll() {
-        List<Estacion> listaEstaciones = estacionRepository.findAll();
-        if(listaEstaciones.isEmpty()){
-            throw new RuntimeException("No hay estaciones disponibles");
+    public List<Estacion> getAll() {
+        List<Estacion> estaciones = estacionRepository.findAll();
+
+        if (estaciones.isEmpty()) {
+            throw new EntityNotFoundException("No hay estaciones disponibles");
         }
-        return listaEstaciones;
+
+        return estaciones;
     }
 
-    public Estacion findById(Long id ){
-
+    public Estacion getEstacionById(Long id) {
         return estacionRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("No se ha encontrado estacion con esta id"+id));
+                .orElseThrow(() -> new EntityNotFoundException("Estación no encontrada"));
     }
 
-    public Estacion crear ( Estacion estacion){
-        if(!StringUtils.hasText(estacion.getNombre())){
-            throw new RuntimeException("El nombre no puede estar vacio");
-        }
-        return estacionRepository.save(estacion);
+
+    public Estacion addEstacion(Estacion e) {
+        return estacionRepository.save(e);
+    }
+
+    public Estacion editEstacion(Long id, Estacion e) {
+        return estacionRepository.findById(id)
+                .map(estacion -> {
+                    estacion.setNombre(e.getNombre());
+                    estacion.setCapacidad(e.getCapacidad());
+                    estacion.setNumero(e.getNumero());
+                    estacion.setCoordenadas(e.getCoordenadas());
+                    return estacionRepository.save(estacion);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Estación no encontrada"));
+
+    }
+
+    public void deleteEstacion(Long id) {
+        estacionRepository.deleteById(id);
     }
   }
