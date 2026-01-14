@@ -12,6 +12,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MantenimientoService {
@@ -36,11 +39,14 @@ public class MantenimientoService {
             throw new RuntimeException("No se puede asignar el mantenimiento");
 
 
-        if(v.getKmActuales()<=mantenimientoRequest.kmEnRevision())
+        if(v.getKmActuales()<mantenimientoRequest.kmEnRevision())
             throw new RuntimeException("El kilometro debe ser mayor o igual al km actual del vehiculo");
 
+        v.setEstado(Estado.EN_MANTENIMIENTO);
+        v.setKmActuales(mantenimientoRequest.kmEnRevision());
+
         Mantenimiento mantenimiento = toEntity(mantenimientoRequest,v,t);
-        mantenimiento.setKmEnRevision(v.getKmActuales());
+
 
         return mantenimientoRepository.save(mantenimiento);
 
@@ -48,6 +54,19 @@ public class MantenimientoService {
 
 
 
+    }
+
+    public List<Mantenimiento> obtenerMantenimientoDeVehiculo(Long vehiculoId){
+
+        if(!vehiculoRepository.existsById(vehiculoId))
+            throw  new EntityNotFoundException("Vehículo con id %d no encontrado".formatted(vehiculoId));
+
+        return mantenimientoRepository.findByVehiculo_Id(vehiculoId);
+    }
+
+    public Optional<Mantenimiento> obtenerUltimoMantenimiento(Long vehiculoId){
+
+        return mantenimientoRepository.findUltimoMantenimientoDeVehiculo(vehiculoId);
     }
 
     public Mantenimiento toEntity(CreateMantenimientoRequest mantenimientoRequest, Vehiculo vehiculo, Taller taller){
