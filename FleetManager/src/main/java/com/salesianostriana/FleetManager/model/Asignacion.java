@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Asignacion {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Mantenimiento {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +22,14 @@ public class Mantenimiento {
 
     private LocalDate fecha;
 
-    private double KmEnRevision;
+    private double kmEnRevision;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vehiculo_id")
     private Vehiculo vehiculo;
+
+    //Helper
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "taller_id")
