@@ -22,15 +22,20 @@ public class VehiculoService {
 
 
 
-    public Page<Vehiculo> getAll(Estado estado, Pageable pageable){
+    public Page<Vehiculo> getAll( Pageable pageable){
 
-        Page<Vehiculo> listPageable = vehiculoRepository.findByEstado(estado,pageable);
+        Page<Vehiculo> listPageable = vehiculoRepository.findVehiculos(pageable);
 
         if(listPageable.isEmpty())
             throw  new EntityNotFoundException("No hay na");
 
         return listPageable;
 
+    }
+
+    public Vehiculo getById ( Long id){
+        return vehiculoRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("No se encontro el vehículo con id %d".formatted(id)));
     }
 
 

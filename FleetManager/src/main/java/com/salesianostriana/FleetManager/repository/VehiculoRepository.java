@@ -15,7 +15,7 @@ import java.util.List;
 public interface VehiculoRepository extends JpaRepository<Vehiculo,Long> {
 
 
-    Page<Vehiculo> findByEstado(Estado estado, Pageable pageable);
+    Page<Vehiculo> findVehiculos( Pageable pageable);
 
 
 

@@ -1,6 +1,7 @@
 package com.salesianostriana.FleetManager.controller;
 
 import com.salesianostriana.FleetManager.dto.VehiculoSummaryDto;
+import com.salesianostriana.FleetManager.model.Estado;
 import com.salesianostriana.FleetManager.model.Vehiculo;
 import com.salesianostriana.FleetManager.service.VehiculoService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class VehiculoController {
     @GetMapping("/vehiculos")
     public Page<VehiculoSummaryDto> obtenerVehiculos(@PageableDefault(page =0, size=20)Pageable pageable){
 
+        return vehiculoService.getAll(pageable).map(VehiculoSummaryDto::of);
     }
 
 
