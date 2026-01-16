@@ -17,7 +17,6 @@ public class ConductorController {
     private final AsignacionService asignacionService;
 
 
-    @GetMapping("conductores/{id}/vehiculo-activo")
-    public
+
 
 }
