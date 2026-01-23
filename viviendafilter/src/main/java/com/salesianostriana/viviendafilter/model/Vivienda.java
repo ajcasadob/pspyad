@@ -19,8 +19,9 @@ public class Vivienda {
     private Long id;
 
     private String titulo,descripcion,ciudad,provincia;
-    private Integer precio,metrosCuadrados,habitaciones,banos;
+    private Integer habitaciones,banos;
 
+    private Double precio,metrosCuadrados;
     @Enumerated(EnumType.STRING)
     private TipoVivienda tipoVivienda;
     @Enumerated(EnumType.STRING)
