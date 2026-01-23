@@ -7,8 +7,7 @@ import com.salesianostriana.bookclub.model.Libro;
 import com.salesianostriana.bookclub.model.Prestamo;
 import com.salesianostriana.bookclub.repository.LibroRepository;
 import com.salesianostriana.bookclub.repository.PrestamoRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.EntityNotFoundException;import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,7 +27,7 @@ public class PrestamoService {
              throw  new RuntimeException("No hay ejemplares disponible para prestamo");
 
             createPrestamoRequest.estado().equals(Estado.ACTIVO);
-            createPrestamoRequest.libro().setEjemplaresDisponibles(-1);
+            createPrestamoRequest.libro().setEjemplaresDisponibles(l.getEjemplaresDisponibles()-1);
 
             Prestamo prestamo = toEntity(createPrestamoRequest);
 
