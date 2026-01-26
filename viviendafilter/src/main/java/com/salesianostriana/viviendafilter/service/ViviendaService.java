@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.PredicateSpecification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,7 +16,7 @@ public class ViviendaService {
 
     private final ViviendaRepository viviendaRepository;
 
-
+    @Transactional(readOnly = true)
     public Page<Vivienda> filtrado (Pageable pageable, FiltradoDto filtro){
         return viviendaRepository.findBy(
                 PredicateSpecification.allOf(

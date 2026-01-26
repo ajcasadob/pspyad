@@ -21,7 +21,7 @@ public record ViviendaResponse(
         LocalDate fechaPublicacion
 ) {
 
-    public ViviendaResponse of (Vivienda v){
+    public static ViviendaResponse of (Vivienda v){
         return new ViviendaResponse(
                 v.getId(),
                 v.getTitulo(),
