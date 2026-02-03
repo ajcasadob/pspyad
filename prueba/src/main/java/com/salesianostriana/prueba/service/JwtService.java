@@ -7,7 +7,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.WeakKeyException;
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +19,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class JwtService {
 
     @Value("${jwt.secret.key}")
@@ -26,8 +31,36 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private Long jwtExpiration;
 
+    @PostConstruct
+    private void init() {
+        try {
+            // Validar que la clave Base64 es válida
+            byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+            
+            // Verificar que tenga al menos 256 bits (32 bytes)
+            if (keyBytes.length < 32) {
+                throw new IllegalStateException(
+                    String.format("La clave JWT debe tener al menos 256 bits (32 bytes). Tamaño actual: %d bytes", 
+                    keyBytes.length)
+                );
+            }
+            
+            log.info("JwtService inicializado correctamente. Clave secreta validada ({} bytes)", keyBytes.length);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalStateException("La clave JWT no es un Base64 válido", e);
+        }
+    }
+
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        Map<String, Object> extraClaims = new HashMap<>();
+        
+        // Incluir roles en los claims del token
+        var roles = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        extraClaims.put("roles", roles);
+        
+        return generateToken(extraClaims, userDetails);
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
