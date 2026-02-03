@@ -32,9 +32,9 @@ public class JwtService {
     private Long jwtExpiration;
 
     @PostConstruct
-    void init() {
+    private void init() {
         try {
-            // Validar que la clave Base64 sea válida
+            // Validar que la clave Base64 es válida
             byte[] keyBytes = Decoders.BASE64.decode(secretKey);
             
             // Verificar que tenga al menos 256 bits (32 bytes)
