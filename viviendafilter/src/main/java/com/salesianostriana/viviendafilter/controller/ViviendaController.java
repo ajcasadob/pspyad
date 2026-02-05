@@ -6,6 +6,7 @@ import com.salesianostriana.viviendafilter.model.EstadoVivienda;
 import com.salesianostriana.viviendafilter.model.TipoVivienda;
 import com.salesianostriana.viviendafilter.service.ViviendaFilter;
 import com.salesianostriana.viviendafilter.service.ViviendaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +26,7 @@ public class ViviendaController {
 
 
     @GetMapping("api/v1/viviendas")
-    public ResponseEntity<Page<ViviendaResponse>> obtenerViviendas (
+    public ResponseEntity<Page<ViviendaResponse>> obtenerViviendas (@Valid
             @PageableDefault(
                     page = 0,
                     size = 10,
