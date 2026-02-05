@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -20,10 +21,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/biblioteca/")
+
+@RequestMapping("/biblioteca")
 @RequiredArgsConstructor
 @Tag(name="Biblioteca", description = "El controlador de bibliotecas, para poder realizar todas las operaciones de gestión")
+@RestController
 public class BibliotecaController {
 
     private final BibliotecaService bibliotecaService;
@@ -189,7 +191,7 @@ public class BibliotecaController {
                                     """)
                     )
             )
-            @RequestBody CrearBibliotecaCmd cmd)
+            @Valid @RequestBody CrearBibliotecaCmd cmd)
     {
         Biblioteca nuevo = bibliotecaService.save(cmd);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -272,7 +274,7 @@ public class BibliotecaController {
                                     """)
                     )
             )
-            @RequestBody CrearBibliotecaCmd cmd){
+           @Valid @RequestBody CrearBibliotecaCmd cmd){
         return ResponseEntity.ok(
                 BibliotecaResponse.of(
                         bibliotecaService.edit(cmd, id)

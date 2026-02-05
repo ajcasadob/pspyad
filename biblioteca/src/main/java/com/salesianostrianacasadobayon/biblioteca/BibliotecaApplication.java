@@ -2,7 +2,9 @@ package com.salesianostrianacasadobayon.biblioteca;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
+@ComponentScan(basePackages = "com.salesianostrianacasadobayon.biblioteca")
 @SpringBootApplication
 public class BibliotecaApplication {
 

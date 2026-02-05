@@ -1,15 +1,23 @@
 package com.salesianostrianacasadobayon.biblioteca.dto;
 
 import com.salesianostrianacasadobayon.biblioteca.model.Biblioteca;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
 public record CrearBibliotecaCmd(
+        @NotBlank
         String nombreCiudad,
+        @NotBlank
         String nombreBiblioteca,
+        @NotBlank
         String anoFundacion,
+        @NotNull
         int numeroAproxLibros,
+        @NotBlank
         String descripcion,
+        @NotBlank
         String urlBiblioteca
 ) {
 
