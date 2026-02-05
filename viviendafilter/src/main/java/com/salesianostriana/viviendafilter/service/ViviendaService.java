@@ -3,6 +3,7 @@ package com.salesianostriana.viviendafilter.service;
 import com.salesianostriana.viviendafilter.dto.FiltradoDto;
 import com.salesianostriana.viviendafilter.model.Vivienda;
 import com.salesianostriana.viviendafilter.repository.ViviendaRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,7 @@ public class ViviendaService {
     private final ViviendaRepository viviendaRepository;
 
     @Transactional(readOnly = true)
-    public Page<Vivienda> filtrado (Pageable pageable, FiltradoDto filtro){
+    public Page<Vivienda> filtrado ( Pageable pageable, FiltradoDto filtro){
         return viviendaRepository.findBy(
                 PredicateSpecification.allOf(
                         ViviendaFilter.filtrarCiduad(filtro.ciudad()),
