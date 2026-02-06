@@ -1,13 +1,17 @@
 package com.salesianostrianacasadobayon.biblioteca.error;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
+import com.salesianostrianacasadobayon.biblioteca.dto.ApiValidationSubError;
+import org.springframework.http.*;
+import org.springframework.objenesis.ObjenesisException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.net.URI;
+import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -49,6 +53,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
 
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+      ProblemDetail result = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+
+      List<ApiValidationSubError> subErrors =
+              ex.getAllErrors().stream()
+                      .map(ApiValidationSubError::from)
+                      .toList();
+
+      result.setProperty("Parametros invalidos",subErrors);
+
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(result);
+
+    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ProblemDetail handleBadLibrary(IllegalArgumentException ex) {
@@ -62,4 +81,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return problemDetail;
     }
+
+
 }

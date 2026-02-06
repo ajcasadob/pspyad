@@ -21,11 +21,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@RestController
 @RequestMapping("/biblioteca")
 @RequiredArgsConstructor
 @Tag(name="Biblioteca", description = "El controlador de bibliotecas, para poder realizar todas las operaciones de gestión")
-@RestController
 public class BibliotecaController {
 
     private final BibliotecaService bibliotecaService;
