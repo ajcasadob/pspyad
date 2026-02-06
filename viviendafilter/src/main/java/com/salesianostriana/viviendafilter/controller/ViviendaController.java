@@ -1,10 +1,10 @@
 package com.salesianostriana.viviendafilter.controller;
 
 import com.salesianostriana.viviendafilter.dto.FiltradoDto;
+import com.salesianostriana.viviendafilter.dto.ViviendaCreateRequest;
 import com.salesianostriana.viviendafilter.dto.ViviendaResponse;
 import com.salesianostriana.viviendafilter.model.EstadoVivienda;
 import com.salesianostriana.viviendafilter.model.TipoVivienda;
-import com.salesianostriana.viviendafilter.service.ViviendaFilter;
 import com.salesianostriana.viviendafilter.service.ViviendaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,6 +49,13 @@ public class ViviendaController {
                 ciudad,provincia,precioMin,precioMax,metrosMin,metrosMax,habitacionesMin,banosMin,tipo,estado,ascensor,terraza,garaje,disponibilidad
         );
         return ResponseEntity.ok(viviendaService.filtrado(pageable,filtrado).map(ViviendaResponse::of));
+
+    }
+
+    @PostMapping("/api/v1/viviendas")
+    public ResponseEntity<ViviendaResponse> create(@RequestBody @Valid ViviendaCreateRequest dto ){
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(ViviendaResponse.of(viviendaService.crearVivieda(dto)));
 
     }
 

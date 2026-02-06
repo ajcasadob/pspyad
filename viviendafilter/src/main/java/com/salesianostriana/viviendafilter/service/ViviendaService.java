@@ -1,6 +1,7 @@
 package com.salesianostriana.viviendafilter.service;
 
 import com.salesianostriana.viviendafilter.dto.FiltradoDto;
+import com.salesianostriana.viviendafilter.dto.ViviendaCreateRequest;
 import com.salesianostriana.viviendafilter.model.Vivienda;
 import com.salesianostriana.viviendafilter.repository.ViviendaRepository;
 import jakarta.validation.Valid;
@@ -10,6 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.PredicateSpecification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -36,4 +40,31 @@ public class ViviendaService {
                 ), q ->q.page(pageable)
         );
     }
+
+
+    public Vivienda crearVivieda (ViviendaCreateRequest dto){
+
+        Vivienda vivienda = Vivienda.builder()
+                .titulo(dto.titulo())
+                .descripcion(dto.descripcion())
+                .ciudad(dto.ciudad())
+                .provincia(dto.provincia())
+                .precio(dto.precio())
+                .metrosCuadrados(dto.metrosCuadrados())
+                .habitaciones(dto.habitaciones())
+                .banos(dto.banos())
+                .tipoVivienda(dto.tipo())
+                .estadoVivienda(dto.estado())
+                .ascensor(dto.ascensor())
+                .terraza(dto.terraza())
+                .garaje(dto.garaje())
+                .disponible(dto.disponible())
+                .fechaPublicacion(LocalDate.now())
+                .build();
+
+        return viviendaRepository.save(vivienda);
+    }
+
+
+
 }

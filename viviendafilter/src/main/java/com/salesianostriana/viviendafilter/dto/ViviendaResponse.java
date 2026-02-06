@@ -13,25 +13,14 @@ import java.time.LocalDate;
 public record ViviendaResponse(
 
         Long id,
-        @NotBlank(message = "Es obligatorio")
         String titulo,
-        @NotBlank
         String ciudad,
-        @NotBlank
         String provincia,
-        @NegativeOrZero
         Double precio,
-        @NotBlank
         Double metrosCuadrados,
-        @NotBlank
         Integer habitaciones,
-        @NotBlank
         Integer banos,
-        @Enumerated(EnumType.STRING)
-        @NotBlank
         TipoVivienda tipoVivienda,
-        @Enumerated(EnumType.STRING)
-        @NotBlank
         EstadoVivienda estadoVivienda,
         Boolean disponible,
         LocalDate fechaPublicacion
