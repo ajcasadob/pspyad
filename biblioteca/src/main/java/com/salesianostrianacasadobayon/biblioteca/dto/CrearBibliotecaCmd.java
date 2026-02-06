@@ -1,15 +1,16 @@
 package com.salesianostrianacasadobayon.biblioteca.dto;
 
 import com.salesianostrianacasadobayon.biblioteca.model.Biblioteca;
+import com.salesianostrianacasadobayon.biblioteca.validation.UniqueNombreBiblioteca;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
 public record CrearBibliotecaCmd(
-        @NotBlank
+        @NotBlank(message = "Pon algo hijo")
         String nombreCiudad,
-        @NotBlank
+        @UniqueNombreBiblioteca(message = "{crearBiblioteca.nombreBiblioteca.unique}")
         String nombreBiblioteca,
         @NotBlank
         String anoFundacion,
