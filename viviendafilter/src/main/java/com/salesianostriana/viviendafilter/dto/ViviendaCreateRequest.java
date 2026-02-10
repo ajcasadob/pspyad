@@ -18,9 +18,9 @@ public record ViviendaCreateRequest(
         String ciudad,
         @NotBlank @Size(max = 80)
         String provincia,
-        @NotNull @Min(0) @PrecioFueraRango(precioMax = 1000000)
+        @NotNull @Min(0) @PrecioFueraRango(precioMax = 1_000_000)
         Double precio,
-        @NotNull @Min(1) @MetrosFueraRango(metrosMax = 1000)
+        @NotNull @Min(1) @MetrosFueraRango(metrosMax = 1_000)
         Double metrosCuadrados,
         @NotNull @Min(0)
         Integer habitaciones,
