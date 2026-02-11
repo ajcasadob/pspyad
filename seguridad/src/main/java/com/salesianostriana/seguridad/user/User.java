@@ -1,4 +1,4 @@
-package com.salesianostriana.seguridad.model;
+package com.salesianostriana.seguridad.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +14,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -30,7 +29,7 @@ public class User implements UserDetails {
     @GeneratedValue
     Long id;
 
-    private String nombre;
+    private String username;
     private String password;
 
     @Builder.Default
@@ -45,11 +44,6 @@ public class User implements UserDetails {
         return Set.of(new SimpleGrantedAuthority("ROLE_"+this.role));
     }
 
-    @Override
-    public String getUsername() {
-        return "";
-    }
-
 
     @Override
     public final boolean equals(Object o) {
@@ -62,5 +56,8 @@ public class User implements UserDetails {
         return getId() != null && Objects.equals(getId(), user.getId());
     }
 
-
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }
